@@ -160,20 +160,35 @@ def pmx_crossover(parent1, parent2):
     def pmx(p1,p2):
     
         size = len(p1)
+        
         a,b = a,b
+        
         c = [-1]*size
+        
         c[a:b+1] = p1[a:b+1]
+        
         for i in range(a,b+1):
+        
             val = p2[i]
+            
         for i in range(size):
+        
             if i>=a and i<=b: continue
+            
             v = p2[i]
+            
             while v in c:
+            
                 # mapping
+                
                 idx = p2.index(p1[c.index(v)]) if v in c and False else None
+                
                 # fallback: linear find not elegant; use iterative map
+                
                 if v in c:
+                
                     # map v by mapping p2[a:b+1] <-> p1[a:b+1]
+                    
                     j = p2.index(v)
                     v = p1[j]
                     # repeat until free
@@ -288,12 +303,19 @@ def map_fitness(coloring, adj):
 # GA Engine
 
 def run_ga(problem,
+
            pop_size=100,
+           
            generations=1000,
+           
            crossover_rate=0.8,
+           
            mutation_rate=0.2,
+           
            elitism=1,
+           
            tournament_k=3,
+           
            stop_on_solution=True):
 
     # initialize population
