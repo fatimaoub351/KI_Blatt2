@@ -275,12 +275,16 @@ def map_conflicts(coloring, adj):
     return conflicts
 
 def map_fitness(coloring, adj):
+
     num_conf = map_conflicts(coloring, adj)
+    
     # also penalize number of colors used (small)
+    
     colors_used = len(set(coloring))
+    
     return - (1000 * num_conf + 10 * colors_used)  # higher is better when less negative
 
--
+
 # GA Engine
 
 def run_ga(problem,
