@@ -27,13 +27,13 @@ Begründung: Die Fitnessfunktion misst, wie nah eine Platzierung an der Konflikt
 
 --------------------------------Crossover-Operatoren-------------------------------------------------------------
 
-Order Crossover (OX) oder Partially Mapped Crossover (PMX) — da Permutationen.
+Order Crossover (OX) oder Partially Mapped Crossover (PMX) 
 
-PMX: erhält Permutation-Eigenschaft, sinnvoll bei Problems mit "position matters".
+Diese Operatoren sind für Permutationen konzipiert und stellen sicher, dass alle Ziffern (Zeilenpositionen) einmal vorkommen und das Kind somit gültige Zeilenpositionen hat
 
 Beispiel: PMX zwischen zwei Eltern → zwei gültige Kinder ohne Duplikate.
 
-------------------------------------Mutation -------------------
+------------------------------------Mutation --------------------------------------------------------------------
 
 Swap-Mutation: Wähle zwei Positionen und tausche deren Werte (Reihen). Das behält Permutationseigenschaft.
 
@@ -46,3 +46,32 @@ Tournament Selection (k=2..5) oder Roulette Wheel, Elitismus (z.B. Top 1 bleibt 
 Begründung: Spezielle Permutations-Operatoren sind erforderlich, um die Gültigkeit der Individuen (jede Zeile nur einmal belegt) zu erhalten.
 
 # Landkarten-Färbeproblem
+
+------------------------------------Kodierung-------------------------------------------------------------------------------------
+Ein Array der Länge N (Anzahl der Länder), wobei jeder Index einem Land entspricht und der Wert (Allel) die Farbe des Landes aus der Menge der verfügbaren Farben (z.B. {1, 2, 3, 4, 5) angib)t.Beispiel: Chromosom = [1, 2, 1, 3, 2, 1]
+
+Begründung: Diese Kodierung ist direkt und einfach, da jeder Genort einem Land und der Allelwert einer Farbe entspricht.
+
+------------------------------------Fitnessfunktion---------------------------------------------------------------------------------
+
+Ziel: Konflikte minimieren, Farbenanzahl minimieren.
+
+Mehrziel-Fitness (zusammengefaßt):
+
+fitness = A * (num_conflict_edges) + B * (number_of_colors_used - 1) mit A >> B (d.h. Konfliktfreiheit hat Vorrang).
+
+Beispiel: fitness = - (1000 * num_conflicts + 10 * colors_used) (je größer, desto besser; oder negatives Fehlermaß minimieren).
+
+Oder lexikographisch: zuerst num_conflicts minimieren, dann colors_used.
+
+----------------------------------Crossover------------------------------------------------------------------------------------------------------
+
+Uniform Crossover: Für jedes Knoten i, Kind[i] = Eltern1[i] mit p=0.5 sonst Eltern2[i].
+
+One-point / Two-point: auch möglich, aber kann lokale Regionenkohärenz zerstören.
+
+-----------------------------------Mutation----------------------------------------------------------------------------------------------------------
+
+Recolor Mutation: Wähle zufällig einen Knoten und setze colors[i] = random(0..k-1).
+
+Kempe-chain Mutation (fortgeschritten): Austausch zweier Farben entlang einer Komponente , nützlich für Färbungsprobleme.
